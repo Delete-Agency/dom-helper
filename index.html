@@ -51,6 +51,7 @@
 
             <script data-live-highlight="simple">
                 const createButton = document.getElementById('show-element');
+
                 createButton.addEventListener('click', () => {
                     const newElement = DOMHelper.createElement('<a href="google.com">Test link</a>');
                     document.body.insertAdjacentElement('beforeend', newElement);
