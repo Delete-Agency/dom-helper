@@ -1,4 +1,4 @@
-# Page Locker
+# DOM Helper
 
 [Live Demo](https://delete-agency.github.io/dom-helper/)
 
