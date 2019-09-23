@@ -1,0 +1,83 @@
+if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector;
+}
+
+function createElement(htmlString) {
+    if (htmlString.indexOf('<html') !== -1) {
+        throw new Error(
+            'Trying to create element from the complete html page. Partial html is required'
+        );
+    }
+
+    const template = document.createElement('template');
+    template.innerHTML = htmlString.trim();
+    const element = template.content ? template.content.firstChild : template.firstChild;
+    // move element to current document to avoid bugs later when we insert it to DOM
+    document.adoptNode(element);
+    return element;
+}
+
+function getParent(target, selector, includeSelf = true) {
+    if (includeSelf && target.matches(selector)) {
+        return target;
+    }
+
+    let parent = target.parentElement;
+    while (parent !== null) {
+        if (parent.matches(selector)) {
+            return parent;
+        }
+        parent = parent.parentElement;
+    }
+
+    return null;
+}
+
+function safeAddEventListener(element) {
+    if (element) {
+        const args = [...arguments].slice(1);
+        element.addEventListener(...args);
+    }
+}
+
+function hasElementParentWithClass(target, parentClass, includeSelf = true) {
+    return getElementParentWithClass(target, parentClass, includeSelf) !== null;
+}
+
+function getElementParentWithClass(target, parentClass, includeSelf = true) {
+    if (includeSelf && target.classList.contains(parentClass)) {
+        return target;
+    }
+
+    let parent = target.parentElement;
+    while (parent !== null) {
+        if (parent.classList.contains(parentClass)) {
+            return parent;
+        }
+        parent = parent.parentElement;
+    }
+
+    return null;
+}
+
+function isHtmlElement(element) {
+    return typeof element === 'object' && 'nodeType' in element;
+}
+
+function createEvent(name) {
+    if (typeof Event === 'function') {
+        return new Event(name, { bubbles: true });
+    }
+    const event = document.createEvent('Event');
+    event.initEvent(name, true, true);
+    return event;
+}
+
+export {
+    createElement,
+    getParent,
+    hasElementParentWithClass,
+    getElementParentWithClass,
+    isHtmlElement,
+    createEvent
+}

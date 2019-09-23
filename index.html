@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dom helper examples</title>
+    <link rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous">
+    <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/themes/prism-okaidia.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@deleteagency/live-highlight@0.0.1/build/live-highlight.min.js"></script>
+
+    <script src="build/dom-helper.min.js"></script>
+</head>
+
+<script>
+    LiveHighlight.bootstrap((element, type) => {
+        function getLanguage(type) {
+            switch (type) {
+                case LiveHighlight.TYPE_JAVASCRIPT:
+                    return 'js';
+                case LiveHighlight.TYPE_STYLES:
+                    return 'css';
+                case LiveHighlight.TYPE_HTML:
+                    return 'markup';
+            }
+        }
+
+        element.className = `lang-${getLanguage(type)}`;
+        Prism.highlightElement(element);
+    });
+</script>
+<body>
+<div class="py-4">
+    <div class="container">
+        <h2>Simple example</h2>
+
+        <p>
+            Clicking on the button below you can create elements from string.
+        </p>
+
+        <div data-live-highlight-target="simple"></div>
+
+        <div class="mb-5">
+            <button class="btn btn-primary" id="show-element">Create new link</button>
+
+            <script data-live-highlight="simple">
+                const createButton = document.getElementById('show-element');
+                createButton.addEventListener('click', () => {
+                    const newElement = DOMHelper.createElement('<a href="google.com">Test link</a>');
+                    document.body.insertAdjacentElement('beforeend', newElement);
+                });
+            </script>
+        </div>
+    </div>
+</div>
+</body>
+</html>
