@@ -38,23 +38,41 @@
 <body>
 <div class="py-4">
     <div class="container">
-        <h2>Simple example</h2>
-
-        <p>
-            Clicking on the button below you can create elements from string.
-        </p>
-
-        <div data-live-highlight-target="simple"></div>
-
         <div class="mb-5">
-            <button class="btn btn-primary" id="show-element">Create new link</button>
+            <h2>Simple example</h2>
+            <p>
+                Clicking on the button below you can create elements from string.
+            </p>
+
+            <div data-live-highlight-target="simple"></div>
+            <button class="btn btn-primary" id="create-link">Create new link</button>
 
             <script data-live-highlight="simple">
-                const createButton = document.getElementById('show-element');
+                const createButton = document.getElementById('create-link');
 
                 createButton.addEventListener('click', () => {
                     const newElement = DOMHelper.createElement('<a href="google.com">Test link</a>');
                     document.body.insertAdjacentElement('beforeend', newElement);
+                });
+            </script>
+        </div>
+
+        <div class="mb-5">
+            <textarea id="content" class="form-control" rows="3">
+                <div>test</div>
+            </textarea>
+            <button class="btn btn-primary" id="create-string">Create from string</button>
+
+            <script data-live-highlight="simple">
+                const createLinkButton = document.getElementById('create-string');
+
+                createLinkButton.addEventListener('click', () => {
+                    const newElement = DOMHelper.createElement(document.getElementById('content').value);
+                    if (newElement) {
+                        document.body.insertAdjacentElement('beforeend', newElement);
+                    } else {
+                        alert('Please enter a proper html markup');
+                    }
                 });
             </script>
         </div>

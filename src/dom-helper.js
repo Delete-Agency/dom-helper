@@ -2,7 +2,7 @@ if (!Element.prototype.matches) {
     Element.prototype.matches = Element.prototype.msMatchesSelector;
 }
 
-function createElement(htmlString) {
+function createFragment(htmlString) {
     if (htmlString.indexOf('<html') !== -1) {
         throw new Error(
             'Trying to create element from the complete html page. Partial html is required'
@@ -11,14 +11,23 @@ function createElement(htmlString) {
 
     const template = document.createElement('template');
     template.innerHTML = htmlString.trim();
-    const element = template.content ? template.content.firstChild : template.firstChild;
-    // move element to current document to avoid bugs later when we insert it to DOM
-    document.adoptNode(element);
+    return template.content;
+
+}
+
+function createElement(htmlString) {
+    const fragment = createFragment(htmlString);
+    // ignore text and comment nodes
+    const element = fragment.firstElementChild;
+    if (element) {
+        // move element to current document to avoid bugs later when we insert it to DOM
+        document.adoptNode(element);
+    }
     return element;
 }
 
 function getParent(target, selector, includeSelf = true) {
-    if (includeSelf && target.matches(selector)) {
+    if (includeSelf && isHtmlElement(target) && target.matches(selector)) {
         return target;
     }
 
@@ -61,7 +70,7 @@ function getElementParentWithClass(target, parentClass, includeSelf = true) {
 }
 
 function isHtmlElement(element) {
-    return typeof element === 'object' && 'nodeType' in element;
+    return typeof element === 'object' && element.nodeType === 1;
 }
 
 function createEvent(name) {
@@ -74,6 +83,7 @@ function createEvent(name) {
 }
 
 export {
+    createFragment,
     createElement,
     getParent,
     hasElementParentWithClass,
