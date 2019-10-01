@@ -10,7 +10,7 @@ function createFragment(htmlString) {
     const div = document.createElement('div');
     div.insertAdjacentHTML('beforeend', htmlString.trim());
 
-    const documentFragment = new DocumentFragment();
+    const documentFragment = document.createDocumentFragment();
     [...div.childNodes].forEach(node => documentFragment.appendChild(node));
 
     return documentFragment;
