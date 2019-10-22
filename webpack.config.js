@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
         output: {
             path: __dirname + '/build',
             filename: "[name].min.js",
-            libraryTarget: 'window',
+            libraryTarget: 'umd',
             library: 'DOMHelper'
         },
         resolve: {
@@ -24,9 +24,6 @@ module.exports = (env, argv) => {
                     exclude: /node_modules/,
                     use: {
                         loader: "babel-loader",
-                        options: {
-                            presets: ['@babel/preset-env']
-                        }
                     }
                 }
             ]

@@ -12,7 +12,6 @@ function createFragment(htmlString) {
     const template = document.createElement('template');
     template.innerHTML = htmlString.trim();
     return template.content;
-
 }
 
 function createElement(htmlString) {
@@ -26,7 +25,7 @@ function createElement(htmlString) {
     return element;
 }
 
-function getParent(target, selector, includeSelf = true) {
+function querySelectorParent(target, selector, includeSelf = false) {
     if (includeSelf && isHtmlElement(target) && target.matches(selector)) {
         return target;
     }
@@ -34,33 +33,6 @@ function getParent(target, selector, includeSelf = true) {
     let parent = target.parentElement;
     while (parent !== null) {
         if (parent.matches(selector)) {
-            return parent;
-        }
-        parent = parent.parentElement;
-    }
-
-    return null;
-}
-
-function safeAddEventListener(element) {
-    if (element) {
-        const args = [...arguments].slice(1);
-        element.addEventListener(...args);
-    }
-}
-
-function hasElementParentWithClass(target, parentClass, includeSelf = true) {
-    return getElementParentWithClass(target, parentClass, includeSelf) !== null;
-}
-
-function getElementParentWithClass(target, parentClass, includeSelf = true) {
-    if (includeSelf && target.classList.contains(parentClass)) {
-        return target;
-    }
-
-    let parent = target.parentElement;
-    while (parent !== null) {
-        if (parent.classList.contains(parentClass)) {
             return parent;
         }
         parent = parent.parentElement;
@@ -85,9 +57,7 @@ function createEvent(name) {
 export {
     createFragment,
     createElement,
-    getParent,
-    hasElementParentWithClass,
-    getElementParentWithClass,
+    querySelectorParent,
     isHtmlElement,
     createEvent
 }
