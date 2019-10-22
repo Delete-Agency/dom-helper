@@ -42,12 +42,12 @@ function querySelectorParent(target, selector, includeSelf = false) {
 }
 
 function isHtmlElement(element) {
-    return typeof element === 'object' && element.nodeType === 1;
+    return element !== null && typeof element === 'object' && element.nodeType === 1;
 }
 
 function createEvent(name) {
     if (typeof Event === 'function') {
-        return new Event(name, { bubbles: true });
+        return new Event(name, {bubbles: true});
     }
     const event = document.createEvent('Event');
     event.initEvent(name, true, true);
