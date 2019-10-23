@@ -66,14 +66,14 @@ it('querySelectorParent ignores self returning parent matches selector', () => {
 it('isHtmlElement returns false for invalid elements', () => {
     const textNode = document.createTextNode('test');
 
-    expect(DOMHelper.isHtmlElement(null)).toEqual(false);
-    expect(DOMHelper.isHtmlElement({})).toEqual(false);
-    expect(DOMHelper.isHtmlElement(textNode)).toEqual(false);
+    expect(DOMHelper.isElement(null)).toEqual(false);
+    expect(DOMHelper.isElement({})).toEqual(false);
+    expect(DOMHelper.isElement(textNode)).toEqual(false);
 });
 
 it('isHtmlElement returns true for valid element', () => {
-    expect(DOMHelper.isHtmlElement(document.createElement('div'))).toEqual(true);
-    expect(DOMHelper.isHtmlElement(document.createElement('form'))).toEqual(true);
+    expect(DOMHelper.isElement(document.createElement('div'))).toEqual(true);
+    expect(DOMHelper.isElement(document.createElement('form'))).toEqual(true);
 });
 
 it('createEvent triggers change event on input', () => {

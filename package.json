@@ -1,21 +1,24 @@
 {
   "name": "@deleteagency/dom-helper",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Delete-Agency/dom-helper.git"
   },
   "homepage": "https://github.com/Delete-Agency/dom-helper",
   "scripts": {
-    "build": "webpack",
+    "transpile": "babel src -d build",
+    "standalone": "webpack",
     "watch": "webpack --watch",
+    "build": "npm run transpile && npm run standalone",
     "test": "jest --coverage"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@babel/cli": "^7.6.4",
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.6.2",
@@ -27,12 +30,13 @@
     "webpack-cli": "^3.3.6"
   },
   "browserslist": [
-    "ios >= 11",
-    "android >= 9",
-    "chromeAndroid >= 45",
+    "ie 11",
+    "last 2 firefox versions",
     "last 2 edge versions",
     "last 2 chrome versions",
-    "last 1 safari versions",
-    "firefox >= 26"
-  ]
+    "last 2 safari versions",
+    "last 2 and_chr versions",
+    "last 2 ios_saf versions"
+  ],
+  "dependencies": {}
 }

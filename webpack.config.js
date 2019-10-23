@@ -4,13 +4,13 @@ module.exports = (env, argv) => {
     return {
         mode: "production",
         entry: {
-            "dom-helper": "./index.js",
+            "dom-helper": "./src/index.js",
         },
         output: {
-            path: __dirname + '/build',
+            path: __dirname + '/standalone',
             filename: "[name].min.js",
-            libraryTarget: 'umd',
-            library: 'DOMHelper'
+            library: 'DOMHelper',
+            libraryTarget: 'umd'
         },
         resolve: {
             extensions: ['.js'],

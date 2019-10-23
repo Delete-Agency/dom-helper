@@ -1,5 +1,8 @@
-import './polyfills';
-
+/**
+ * Creates a new DocumentFragment based on the provided markup.
+ * @param {string} htmlString
+ * @return {DocumentFragment}
+ */
 function createFragment(htmlString) {
     if (htmlString.indexOf('<html') !== -1) {
         throw new Error(
@@ -16,6 +19,13 @@ function createFragment(htmlString) {
     return documentFragment;
 }
 
+/**
+ * Creates a new Element based on the provided markup.
+ * If markup contains more then 1 sibling elements, only first will be returned.
+ * Returns `null` if markup contains zero valid elements.
+ * @param {string} htmlString
+ * @return {Element}
+ */
 function createElement(htmlString) {
     const fragment = createFragment(htmlString);
     // ignore text and comment nodes
@@ -27,8 +37,15 @@ function createElement(htmlString) {
     return element;
 }
 
+/**
+ * Searches element up the DOM tree that matches provided selector
+ * @param {Element} target
+ * @param {string} selector
+ * @param  {boolean} includeSelf
+ * @return {Element}
+ */
 function querySelectorParent(target, selector, includeSelf = false) {
-    if (includeSelf && isHtmlElement(target) && target.matches(selector)) {
+    if (includeSelf && isElement(target) && target.matches(selector)) {
         return target;
     }
 
@@ -43,10 +60,20 @@ function querySelectorParent(target, selector, includeSelf = false) {
     return null;
 }
 
-function isHtmlElement(element) {
+/**
+ * Checks whether the passed value is an Element
+ * @param {Element} element
+ * @return {boolean}
+ */
+function isElement(element) {
     return element !== null && typeof element === 'object' && element.nodeType === 1;
 }
 
+/**
+ * Creates new Event ready for dispatching
+ * @param {string} name
+ * @return {Event}
+ */
 function createEvent(name) {
     if (typeof Event === 'function') {
         return new Event(name, { bubbles: true });
@@ -60,6 +87,6 @@ export {
     createFragment,
     createElement,
     querySelectorParent,
-    isHtmlElement,
+    isElement,
     createEvent
 }
