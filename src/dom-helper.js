@@ -1,6 +1,4 @@
-if (!Element.prototype.matches) {
-    Element.prototype.matches = Element.prototype.msMatchesSelector;
-}
+import './polyfills';
 
 function createFragment(htmlString) {
     if (htmlString.indexOf('<html') !== -1) {
@@ -9,9 +7,13 @@ function createFragment(htmlString) {
         );
     }
 
-    const template = document.createElement('template');
-    template.innerHTML = htmlString.trim();
-    return template.content;
+    const div = document.createElement('div');
+    div.insertAdjacentHTML('beforeend', htmlString.trim());
+
+    const documentFragment = document.createDocumentFragment();
+    [...div.childNodes].forEach(node => documentFragment.appendChild(node));
+
+    return documentFragment;
 }
 
 function createElement(htmlString) {
@@ -47,7 +49,7 @@ function isHtmlElement(element) {
 
 function createEvent(name) {
     if (typeof Event === 'function') {
-        return new Event(name, {bubbles: true});
+        return new Event(name, { bubbles: true });
     }
     const event = document.createEvent('Event');
     event.initEvent(name, true, true);

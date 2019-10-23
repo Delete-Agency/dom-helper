@@ -19,7 +19,7 @@ $ npm install @deleteagency/dom-helper
 ```js
 import DOMHelper from  '@deleteagency/dom-helper';
 
-const newElement = DOMHelper.createElement('<a href="google.com">Gp to Google</a>');
+const newElement = DOMHelper.createElement('<a href="google.com">Go to Google</a>');
 ```
 
 ## API
