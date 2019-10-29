@@ -4,13 +4,12 @@ module.exports = (env, argv) => {
     return {
         mode: "production",
         entry: {
-            "dom-helper": "./src/index.js",
+            "dom-helper": ["./src/index.js"]
         },
         output: {
-            path: __dirname + '/standalone',
             filename: "[name].min.js",
+            libraryTarget: 'umd',
             library: 'DOMHelper',
-            libraryTarget: 'umd'
         },
         resolve: {
             extensions: ['.js'],
@@ -24,6 +23,17 @@ module.exports = (env, argv) => {
                     exclude: /node_modules/,
                     use: {
                         loader: "babel-loader",
+                        options: {
+                            presets: [
+                                [
+                                    '@babel/preset-env',
+                                    {
+                                        useBuiltIns: 'usage',
+                                        corejs: 3
+                                    }
+                                ]
+                            ]
+                        }
                     }
                 }
             ]
